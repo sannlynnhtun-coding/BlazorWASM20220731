@@ -1,0 +1,26 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@*<input type="text" @bind-value="Name" />*@
+@*<button class="btn btn-dark" @onclick="Save">Save</button>*@
+
+@code {
+    private int currentCount = 0;
+    //private string Name = "";
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    //void Save(){
+    //    Console.WriteLine(Name);
+    //}
+}

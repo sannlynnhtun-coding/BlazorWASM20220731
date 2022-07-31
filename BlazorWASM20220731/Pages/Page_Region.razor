@@ -1,0 +1,49 @@
+﻿@page "/setup/region"
+@inject HttpClient Http
+
+<h3>Page_Region</h3>
+
+<label>Region Desp</label>
+<input type="text" @bind-value="reqModel.RegionDescription" />
+<button class="btn btn-dark" @onclick="Save">Save</button>
+
+@if(lst == null)
+{
+    <p>Loading</p>
+}
+else
+{
+    @for (int i = 0; i < lst.Length; i++)
+    {
+        <p>@lst[i].RegionDescription</p>
+    }
+}
+
+
+@code {
+    RegionModel[] lst = null;
+    RegionModel reqModel = new RegionModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetRegions();
+    }
+
+    async Task GetRegions()
+    {
+        lst = await Http.GetFromJsonAsync<RegionModel[]>("https://localhost:7268/api/Region");
+    }
+
+    async Task Save()
+    {
+        await Http.PostAsJsonAsync<RegionModel>("https://localhost:7268/api/Region", reqModel);
+        
+        await GetRegions();
+    }
+
+    private class RegionModel
+    {
+        public int RegionId { get; set; }
+        public string RegionDescription { get; set; }
+    }
+}
